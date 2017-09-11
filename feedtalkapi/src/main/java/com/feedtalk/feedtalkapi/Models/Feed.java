@@ -1,110 +1,130 @@
 package com.feedtalk.feedtalkapi.Models;
 import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
-
-import java.util.Random;
-
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import com.feedtalk.feedtalkapi.utility.UtilityHelper;
 
 @Entity
 @Table(name="FEED")
 public class Feed {
 	public Feed(){		
 	}
-	private int FEED_ID;
 	@Id
-	private String URL_LINK;
-	private String HEADLINE;
-	private String CONTENT;
-	private String HEADLINE_IMAGE;	
-	private String CATAGORY;
-	private String AUTHOUR_NAME;
-	private String PUBLISHING_DATE;	
-	private String PUBLISHED;	
-	private int VIEWS;
-	private int SHARED;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int feedId;
+	
+	@Column(unique=true,name="UrlLink")
+	private String urlLink;	
+	
+	@Column(nullable=false)
+	private String headline;
+	
+	@Column(length=3500,nullable=false)
+	private String content;
+	
+	@Column(length=4000,nullable=false)
+	private String headLineImage;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable=false,length=30)
+	private UtilityHelper.FeedCatagory catagory;
+	
+	@Column(nullable=false,length=25)
+	private String authourName;
 	
 	
+	@Column(nullable=false)	
+	@Temporal(TemporalType.DATE)
+	private Date  publishingDate;
 	
-	public int getFEED_ID() {
-		return FEED_ID;
+	@Column(nullable=false)
+	private boolean published;	
+	
+	private int views;
+	private int shared;
+	public int getFeedId() {
+		return feedId;
 	}
-	public void setFEED_ID(int fEED_ID) {
-		FEED_ID = fEED_ID;
+	public void setFeedId(int feedId) {
+		this.feedId = feedId;
 	}
-	public String getURL_LINK() {
-		return URL_LINK;
+	public String getUrlLink() {
+		return urlLink;
 	}
-	public void setURL_LINK(String uRL_LINK) {
-		URL_LINK = uRL_LINK;
+	public void setUrlLink(String urlLink) {
+		this.urlLink = urlLink;
 	}
-	public String getHEADLINE() {
-		return HEADLINE;
+	public String getHeadline() {
+		return headline;
 	}
-	public void setHEADLINE(String hEADLINE) {
-		HEADLINE = hEADLINE;
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
-	public String getCONTENT() {
-		return CONTENT;
+	public String getContent() {
+		return content;
 	}
-	public void setCONTENT(String cONTENT) {
-		CONTENT = cONTENT;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public String getCATAGORY() {
-		return CATAGORY;
+	public String getHeadLineImage() {
+		return headLineImage;
 	}
-	public void setCATAGORY(String cATAGORY) {
-		CATAGORY = cATAGORY;
+	public void setHeadLineImage(String headLineImage) {
+		this.headLineImage = headLineImage;
 	}
-	public String getAUTHOUR_NAME() {
-		return AUTHOUR_NAME;
+	public UtilityHelper.FeedCatagory getCatagory() {
+		return catagory;
 	}
-	public void setAUTHOUR_NAME(String aUTHOUR_NAME) {
-		AUTHOUR_NAME = aUTHOUR_NAME;
+	public void setCatagory(UtilityHelper.FeedCatagory catagory) {
+		this.catagory = catagory;
 	}
-	public String getPUBLISHING_DATE() {
-		return PUBLISHING_DATE;
+	public String getAuthourName() {
+		return authourName;
 	}
-	public void setPUBLISHING_DATE(String pUBLISHING_DATE) {
-		PUBLISHING_DATE = pUBLISHING_DATE;
+	public void setAuthourName(String authourName) {
+		this.authourName = authourName;
 	}
-	public String getPUBLISHED() {
-		return PUBLISHED;
+	
+	public Date getPublishingDate() {
+		return publishingDate;
 	}
-	public void setPUBLISHED(String pUBLISHED) {
-		PUBLISHED = pUBLISHED;
+	public void setPublishingDate(Date publishingDate) {
+		this.publishingDate = publishingDate;
 	}
-	public int getVIEWS() {
-		return VIEWS;
+	
+	public boolean isPublished() {
+		return published;
 	}
-	public void setVIEWS(int vIEWS) {
-		VIEWS = vIEWS;
+	public void setPublished(boolean published) {
+		this.published = published;
 	}
-	public int getSHARED() {
-		return SHARED;
+	public int getViews() {
+		return views;
 	}
-	public void setSHARED(int sHARED) {
-		SHARED = sHARED;
+	public void setViews(int views) {
+		this.views = views;
 	}
-	public String getHEADLINE_IMAGE() {
-		return HEADLINE_IMAGE;
+	public int getShared() {
+		return shared;
 	}
-
-	public void setHEADLINE_IMAGE(String hEADLINE_IMAGE) {
-		HEADLINE_IMAGE = hEADLINE_IMAGE;
-	}
-
+	public void setShared(int shared) {
+		this.shared = shared;
+	}	
 	@PrePersist
-	public void initializeFeedId() {
-	    Random random = new Random(System.currentTimeMillis());
-	    this.FEED_ID = random.nextInt(1000000000);
-	}
+	@PreUpdate
+	public void setDefault(){
 	
-
+	}
 
 }

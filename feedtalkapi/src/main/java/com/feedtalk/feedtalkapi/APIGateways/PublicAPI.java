@@ -1,44 +1,53 @@
 package com.feedtalk.feedtalkapi.APIGateways;
 
-import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
+import com.feedtalk.feedtalkapi.utility.UtilityHelper;
+import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
 
 
 @RestController
-
 public class PublicAPI {
 	
 	@Autowired
 	FeedRepoImpl feedRepoImplementation;
-
-	
-	
-	@RequestMapping(method=RequestMethod.GET,value="/feed/getFeedByURL/{URL}/")
-	public Feed getFeedByURL(@PathVariable String URL){		
-		return feedRepoImplementation.getFeedByURL(URL);		
+	@RequestMapping(method=RequestMethod.GET,value="/feed/FeedById/{feedId}/")
+	public Feed getFeedByURL(@PathVariable int feedId){		
+		return feedRepoImplementation.getFeedByIdImpl(feedId);		
 	}
-	@RequestMapping(method=RequestMethod.POST,value="/feed/addNewFeed")
+	
+	@RequestMapping(method=RequestMethod.GET,value="/feed/FeedByUrl/{Url_Link}/")
+	public Feed getFeedByURL(@PathVariable String Url_Link){		
+		return feedRepoImplementation.getFeedByUrlLinkImpl(Url_Link);			}
+		
+	@RequestMapping(method=RequestMethod.GET,value="/feed/AllFeeds")
+	public List<Feed> getAllFeed(){
+		return feedRepoImplementation.getAllFeedImpl();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/feed/Top20Feeds")
+	public List<Feed> getTop20Feed(){
+		return feedRepoImplementation.getTop20Feed();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/feed/Top20FeedsByCatagory/{catagory}/")
+	public List<Feed> getTop20FeedByCatagory(@PathVariable UtilityHelper.FeedCatagory catagory){
+		return feedRepoImplementation.getTop20FeedByCatagory(catagory);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value="/feed/NewFeed")
 	public Feed addNewFeed(@RequestBody Feed feed){		
-		System.out.println(feed.getFEED_ID());
 		return feedRepoImplementation.addNewFeedImpl(feed);		
 	}
-
-	public static  void main(String ...args){
-		Feed feed = new Feed();
-	    System.out.println(feed.getFEED_ID());
-	}
-
+	
+	
+	
 }
