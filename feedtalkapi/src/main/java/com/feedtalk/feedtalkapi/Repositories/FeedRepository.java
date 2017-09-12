@@ -10,11 +10,14 @@ import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
 
 public interface FeedRepository extends CrudRepository<Feed,Integer> {
 			
-	public Feed findByUrlLink(String urllink);
+	public Feed findByUrlLinkAndPublishedTrue(String urllink);
 	
-	public List<Feed> findTop20ByOrderByPublishingDateDesc();
+	public Feed findByFeedIdAndPublishedTrue(int id);
+	
+	public List<Feed> findTop20ByPublishedTrueOrderByPublishingDateDesc();
 	
 	public List<Feed> findTop20ByCatagoryAndPublishedTrueOrderByPublishingDateDesc(UtilityHelper.FeedCatagory catagory);
+	
 	
 	
 	

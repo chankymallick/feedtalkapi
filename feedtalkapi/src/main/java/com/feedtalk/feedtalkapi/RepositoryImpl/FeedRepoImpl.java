@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.Repositories.FeedRepository;
+import com.feedtalk.feedtalkapi.Repositories.UserRepository;
 import com.feedtalk.feedtalkapi.utility.UtilityHelper;
 import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
 
@@ -16,18 +17,18 @@ public class FeedRepoImpl {
 	
 	
 	@Autowired
-	FeedRepository feedRepository;
+	FeedRepository feedRepository;	
 	
 	public Feed addNewFeedImpl(Feed feed){		
 		return feedRepository.save(feed);
 	}	
 	
 	public Feed getFeedByIdImpl(int feedId){
-		return feedRepository.findOne(feedId);		
+		return feedRepository.findByFeedIdAndPublishedTrue(feedId);		
 	}
 	
 	public Feed getFeedByUrlLinkImpl(String urllink){
-		return feedRepository.findByUrlLink(urllink);
+		return feedRepository.findByUrlLinkAndPublishedTrue(urllink);
 		
 	}
 	
@@ -38,7 +39,7 @@ public class FeedRepoImpl {
 	}
 	
 	public List<Feed> getTop20Feed(){
-		return feedRepository.findTop20ByOrderByPublishingDateDesc();
+		return feedRepository.findTop20ByPublishedTrueOrderByPublishingDateDesc();
 	}
 	
 	public List<Feed> getTop20FeedByCatagory(UtilityHelper.FeedCatagory catagory){		

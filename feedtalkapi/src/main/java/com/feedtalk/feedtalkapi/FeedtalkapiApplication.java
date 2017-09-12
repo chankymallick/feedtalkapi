@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
+import com.feedtalk.feedtalkapi.RepositoryImpl.UserRepoImpl;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -28,6 +29,10 @@ public class FeedtalkapiApplication extends SpringBootServletInitializer {
 	@Bean
 	public FeedRepoImpl feedRepoImplementation(){
 		return new FeedRepoImpl();
+	}
+	@Bean
+	public UserRepoImpl userRepoImplementation(){
+		return new UserRepoImpl();
 	}
 }
 
