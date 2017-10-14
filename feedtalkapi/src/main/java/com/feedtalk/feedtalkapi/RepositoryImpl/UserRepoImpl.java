@@ -1,6 +1,7 @@
 package com.feedtalk.feedtalkapi.RepositoryImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.Models.User;
@@ -10,6 +11,7 @@ public class UserRepoImpl {
 
 	@Autowired
 	UserRepository userRepository;
+	
 	
 	public User addNewUserImpl(User user){		
 		return userRepository.save(user);

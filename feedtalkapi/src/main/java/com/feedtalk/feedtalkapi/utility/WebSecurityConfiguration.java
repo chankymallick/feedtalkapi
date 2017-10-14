@@ -3,6 +3,7 @@ package com.feedtalk.feedtalkapi.utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -32,7 +33,7 @@ public class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdap
 				com.feedtalk.feedtalkapi.Models.User user = userRepoImpl.getUserByUserName(username);
 				if (user != null) {
 					return new User(user.getEmail(), user.getPassword(), true, true, true, true,
-							AuthorityUtils.createAuthorityList("reader"));
+							AuthorityUtils.createAuthorityList("READER"));
 				} else {
 					throw new UsernameNotFoundException("could not find the user '" + username + "'");
 				}

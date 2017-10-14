@@ -7,9 +7,15 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import com.feedtalk.feedtalkapi.Repositories.FeedLinksRepository;
+import com.feedtalk.feedtalkapi.RepositoryImpl.FeedLinksRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.UserRepoImpl;
+import com.feedtalk.feedtalkapi.Scrapper.LinksExtractor;
+
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -33,6 +39,15 @@ public class FeedtalkapiApplication extends SpringBootServletInitializer {
 	@Bean
 	public UserRepoImpl userRepoImplementation(){
 		return new UserRepoImpl();
+	}
+	@Bean
+	public FeedLinksRepoImpl feedLinksRepoImplementation(){
+		return new FeedLinksRepoImpl();
+	}
+	
+	@Bean 
+	public LinksExtractor linksExtractor(){
+		return new LinksExtractor();
 	}
 }
 
