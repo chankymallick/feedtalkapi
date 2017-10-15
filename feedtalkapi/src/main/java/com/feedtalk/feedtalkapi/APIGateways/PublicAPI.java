@@ -45,7 +45,7 @@ public class PublicAPI {
 	public Feed getFeedByURL(@PathVariable String Url_Link) {
 		return feedRepoImplementation.getFeedByUrlLinkImpl(Url_Link);
 	}
-
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/UrlVerify/{Url_Link}/")
 	public boolean isUrlExist(@PathVariable String Url_Link) {
 		return feedRepoImplementation.isUrlExistImpl(Url_Link);
@@ -102,6 +102,9 @@ public class PublicAPI {
 	public List<FeedLinks> getFeedLinks(){
 		return feedLinksRepoImplementation.getFeedLinksRepoImpl();
 	}
-	
+	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/url/{URL}/")
+	public FeedLinks getFeedLinkByURL(@PathVariable String URL){
+		return feedLinksRepoImplementation.getFeedlinkByURLImpl(URL);
+	}
 	
 }

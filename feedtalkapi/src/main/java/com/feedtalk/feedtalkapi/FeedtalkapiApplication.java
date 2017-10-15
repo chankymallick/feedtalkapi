@@ -14,7 +14,8 @@ import com.feedtalk.feedtalkapi.Repositories.FeedLinksRepository;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedLinksRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.UserRepoImpl;
-import com.feedtalk.feedtalkapi.Scrapper.LinksExtractor;
+import com.feedtalk.feedtalkapi.Scrapper.NDTVLinksExtractor;
+import com.feedtalk.feedtalkapi.Scrapper.RSSReader;
 
 
 @SpringBootApplication
@@ -46,8 +47,8 @@ public class FeedtalkapiApplication extends SpringBootServletInitializer {
 	}
 	
 	@Bean 
-	public LinksExtractor linksExtractor(){
-		return new LinksExtractor();
+	public RSSReader rssReader(){
+		return new RSSReader();
 	}
 }
 

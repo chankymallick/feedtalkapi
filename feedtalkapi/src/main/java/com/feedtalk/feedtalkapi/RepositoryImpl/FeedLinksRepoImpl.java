@@ -3,6 +3,7 @@ package com.feedtalk.feedtalkapi.RepositoryImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,14 +11,15 @@ import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.Models.FeedLinks;
 import com.feedtalk.feedtalkapi.Repositories.FeedLinksRepository;
 import com.feedtalk.feedtalkapi.Repositories.FeedRepository;
-import com.feedtalk.feedtalkapi.Scrapper.LinksExtractor;
+import com.feedtalk.feedtalkapi.Scrapper.NDTVLinksExtractor;
+import com.feedtalk.feedtalkapi.Scrapper.RSSReader;
 
 public class FeedLinksRepoImpl {
 	@Autowired
 	FeedLinksRepository feedLinkRepository;
-
 	@Autowired
-	LinksExtractor linksExtractor;
+	RSSReader rssReader;
+	
 	public boolean addLinks(FeedLinks fdl) {
 		if (feedLinkRepository.save(fdl) != null) {
 			return true;
@@ -31,22 +33,18 @@ public class FeedLinksRepoImpl {
 		return feedLinklist;
 	}
 	public String mineNDTVLinks(){
-		Map <String,String[]> ndtvLinks = linksExtractor.NDTVLinks();	
+		Set<FeedLinks> linksSet = rssReader.getNDTVFeedLinks() ;	
 		int i=1;
 		String response ="";
-		for(String ss :ndtvLinks.keySet()){
-			FeedLinks newlink = new FeedLinks();
-			newlink.setLinkUrl(ss);
-			newlink.setHeadline(ndtvLinks.get(ss)[0]);
-			newlink.setHeadlineImageUrl(ndtvLinks.get(ss)[1]);
-			newlink.setContentInitial("");
-			newlink.setClicked(0);
-			newlink.setPublished(false);
-			newlink.setSourceAgency("NDTV");		
-			response+= i+ " == " + this.addLinks(newlink);			
+		for(FeedLinks fl : linksSet){		
+			if(feedLinkRepository.findByLinkUrlAndIsPublishedTrue(fl.getLinkUrl())==null){
+			response+= i+ " == " + this.addLinks(fl);			
 			i++;
+			}
 		}
 		return response;
 	}
-
+	public FeedLinks getFeedlinkByURLImpl(String URLLink){
+		return feedLinkRepository.findByLinkUrlAndIsPublishedTrue(URLLink);
+	}
 }

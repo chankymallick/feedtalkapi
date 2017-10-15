@@ -22,36 +22,25 @@ public class FeedLinks {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int linkId;
-	@Column(length=600,nullable=false,unique=true,name="linkUrl")
+	@Column(length=1000,nullable=false,unique=true,name="linkUrl")
 	private String linkUrl;
-	@Column(length=500,nullable=false)
+	@Column(length=1500)
+	private String ContentImageUrl;	
+	@Column(length=1500)
 	private String headlineImageUrl;
-	@Column(length=500,nullable=false)
+	@Column(length=1500)
 	private String headline;
-	@Column(length=200,nullable=false)
+	@Column(length=1200)
 	private String contentInitial;
-	@Column(length=20,nullable=false)
+	@Column(length=1020)
 	private String sourceAgency;
-	private int clicked;
-	@CreationTimestamp
+	private String catagory;	
+	private int clicked;	
 	@Column(nullable=false)	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date linkDate;
 	private boolean isPublished;
 
-	
-	public FeedLinks(String linkUrl, String headlineImageUrl, String headline, String contentInitial,
-			String sourceAgency, int clicked, Date linkDate, boolean isPublished) {
-		super();
-		this.linkUrl = linkUrl;
-		this.headlineImageUrl = headlineImageUrl;
-		this.headline = headline;
-		this.contentInitial = contentInitial;
-		this.sourceAgency = sourceAgency;
-		this.clicked = clicked;
-		this.linkDate = linkDate;
-		this.isPublished = isPublished;
-	}
 	public int getLinkId() {
 		return linkId;
 	}
@@ -66,6 +55,12 @@ public class FeedLinks {
 	}
 	public String getHeadlineImageUrl() {
 		return headlineImageUrl;
+	}
+	public String getContentImageUrl() {
+		return ContentImageUrl;
+	}
+	public void setContentImageUrl(String contentImageUrl) {
+		ContentImageUrl = contentImageUrl;
 	}
 	public void setHeadlineImageUrl(String headlineImageUrl) {
 		this.headlineImageUrl = headlineImageUrl;
@@ -87,6 +82,12 @@ public class FeedLinks {
 	}
 	public void setSourceAgency(String sourceAgency) {
 		this.sourceAgency = sourceAgency;
+	}
+	public String getCatagory() {
+		return catagory;
+	}
+	public void setCatagory(String catagory) {
+		this.catagory = catagory;
 	}
 	public int getClicked() {
 		return clicked;
