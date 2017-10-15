@@ -32,6 +32,9 @@ public class FeedLinksRepoImpl {
 		feedLinkRepository.findAll().forEach(feedLinklist::add);
 		return feedLinklist;
 	}
+	public List<FeedLinks> getLatestFeedLinksRepoImpl(){
+		return feedLinkRepository.findTop40ByIsPublishedTrueOrderByLinkDateDesc();
+	}
 	public String mineNDTVLinks(){
 		Set<FeedLinks> linksSet = rssReader.getNDTVFeedLinks() ;	
 		int i=1;

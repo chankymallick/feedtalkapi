@@ -102,6 +102,10 @@ public class PublicAPI {
 	public List<FeedLinks> getFeedLinks(){
 		return feedLinksRepoImplementation.getFeedLinksRepoImpl();
 	}
+	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/latest")
+	public List<FeedLinks> getLatestFeedLinks(){
+		return feedLinksRepoImplementation.getLatestFeedLinksRepoImpl();
+	}
 	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/url/{URL}/")
 	public FeedLinks getFeedLinkByURL(@PathVariable String URL){
 		return feedLinksRepoImplementation.getFeedlinkByURLImpl(URL);
