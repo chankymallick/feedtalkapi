@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.feedtalk.feedtalkapi.Repositories.FeedLinksRepository;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedLinksRepoImpl;
@@ -22,6 +23,7 @@ import com.feedtalk.feedtalkapi.Scrapper.RSSReader;
 @EnableAutoConfiguration
 @EnableJpaRepositories("com.feedtalk.feedtalkapi.Repositories")
 @Configuration
+@EnableScheduling
 public class FeedtalkapiApplication extends SpringBootServletInitializer {
 
     @Override

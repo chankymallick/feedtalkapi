@@ -96,7 +96,7 @@ public class PublicAPI {
 	
 	@RequestMapping(method = RequestMethod.POST , value = "/feedlinks/extract")
 	public String extractLinks(){
-		return feedLinksRepoImplementation.mineNDTVLinks();
+		return feedLinksRepoImplementation.mineLinks();
 	}
 	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks")
 	public List<FeedLinks> getFeedLinks(){

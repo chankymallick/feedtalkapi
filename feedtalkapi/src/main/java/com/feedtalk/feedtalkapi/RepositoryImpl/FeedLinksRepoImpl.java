@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.Models.FeedLinks;
@@ -35,8 +36,9 @@ public class FeedLinksRepoImpl {
 	public List<FeedLinks> getLatestFeedLinksRepoImpl(){
 		return feedLinkRepository.findTop40ByIsPublishedTrueOrderByLinkDateDesc();
 	}
-	public String mineNDTVLinks(){
-		Set<FeedLinks> linksSet = rssReader.getNDTVFeedLinks() ;	
+	public String mineLinks(){
+		Set<FeedLinks> linksSet = rssReader.getNDTVFeedLinks() ;
+		Set<FeedLinks> linksSet2 = rssReader.getTOILinks();
 		int i=1;
 		String response ="";
 		for(FeedLinks fl : linksSet){		
@@ -45,7 +47,17 @@ public class FeedLinksRepoImpl {
 			i++;
 			}
 		}
+		for(FeedLinks fl : linksSet2){		
+			if(feedLinkRepository.findByLinkUrlAndIsPublishedTrue(fl.getLinkUrl())==null){
+			response+= i+ " == " + this.addLinks(fl);			
+			i++;
+			}
+		}
 		return response;
+	}
+	@Scheduled(cron="0 0/5 * * * ?")
+	public void scheduler(){
+		System.out.println("Scheduled Mining Started : "+this.mineLinks());
 	}
 	public FeedLinks getFeedlinkByURLImpl(String URLLink){
 		return feedLinkRepository.findByLinkUrlAndIsPublishedTrue(URLLink);
