@@ -11,4 +11,8 @@ public class UtilityHelper {
    POLITICS,SPORTS,ENTERTAINMENT,MOVIES		
    }  
    
+   public enum CommentType{
+	   MAIN,REPLY
+   }
+   
 }

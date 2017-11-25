@@ -1,12 +1,16 @@
 package com.feedtalk.feedtalkapi.Models;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,7 +44,17 @@ public class FeedLinks {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date linkDate;
 	private boolean isPublished;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Comment> comments;
 
+	
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 	public int getLinkId() {
 		return linkId;
 	}
@@ -108,4 +122,6 @@ public class FeedLinks {
 		this.isPublished = isPublished;
 	}
 
+	
+	
 }

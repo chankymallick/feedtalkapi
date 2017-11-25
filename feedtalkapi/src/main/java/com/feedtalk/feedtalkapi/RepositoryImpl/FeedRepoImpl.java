@@ -1,12 +1,17 @@
 package com.feedtalk.feedtalkapi.RepositoryImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.feedtalk.feedtalkapi.Models.Comment;
 import com.feedtalk.feedtalkapi.Models.Feed;
+import com.feedtalk.feedtalkapi.Models.Reply;
 import com.feedtalk.feedtalkapi.Repositories.FeedRepository;
 import com.feedtalk.feedtalkapi.Repositories.UserRepository;
 import com.feedtalk.feedtalkapi.utility.UtilityHelper;
@@ -85,5 +90,76 @@ public class FeedRepoImpl {
 		} else {
 			return false;
 		}
+	}
+	
+	public boolean newComment(int feedId,Comment comment){
+		Feed feed = feedRepository.findOne(feedId);
+		Set<Comment> hsh = feed.getComments();
+		hsh.add(comment);		
+		feed.setComments(hsh);
+		feedRepository.save(feed);
+		return true;
+		
+	}
+
+	public Comment getComment(Feed feed , int commentId){
+		for(Comment com :feed.getComments()){
+			if(com.getCommentId() == commentId){
+				return com;
+			}			
+		}
+		return null;
+	}
+	public Reply getReply(int feedId , int commentId,int replyId){
+		for(Comment com : feedRepository.findOne(feedId).getComments()){
+			if(com.getCommentId() == commentId){
+				for(Reply rep : com.getReply()){
+					if(rep.getReplyId() == replyId){
+						return rep;
+					}
+				}
+			}			
+		}
+		return null;
+	}
+	public int likeComment(int feedId,int commentId){
+		Feed feed = feedRepository.findOne(feedId);
+		Comment com = this.getComment(feed, commentId);
+		int like = com.getLike()+1;
+		com.setLike(like);
+		feedRepository.save(feed);
+		return like;
+	}
+	public int dislikeComment(int feedId,int commentId){
+		Feed feed = feedRepository.findOne(feedId);
+		Comment com = this.getComment(feed, commentId);
+		int dislike = com.getDislike()+1;
+		com.setDislike(dislike);
+		feedRepository.save(feed);
+		return dislike;
+	}
+	public boolean newReply(int FeedId , int CommentId, Reply reply ){
+		Feed feed = feedRepository.findOne(FeedId);		
+		Comment targetComment = null;
+	    for(Comment com:feed.getComments()){
+	    	if(com.getCommentId()==CommentId){
+	    		targetComment = com;
+	    		break;
+	    	}
+	    }
+		Set <Reply> newreply = targetComment.getReply();
+		newreply.add(reply);
+	    targetComment.setReply(newreply);
+	    feedRepository.save(feed);
+		return true;
+		
+	}
+	public boolean reportComment(int feedId,int commentId){
+		Feed feed = feedRepository.findOne(feedId);
+		Comment com = this.getComment(feed, commentId);
+		int report = com.getReport()+1;
+		com.setReport(report);
+		feedRepository.save(feed);
+		return true;
 	}
 }

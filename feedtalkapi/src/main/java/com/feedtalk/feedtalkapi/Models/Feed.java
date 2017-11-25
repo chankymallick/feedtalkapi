@@ -4,13 +4,18 @@ import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -66,6 +71,18 @@ public class Feed {
 	private int shared;
 	private int likes;
 	private int dislikes;
+	
+
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Comment> comments; 
+	
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
 
 	public int getLikes() {
 		return likes;

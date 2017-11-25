@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.feedtalk.feedtalkapi.Models.Comment;
 import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.Models.FeedLinks;
+import com.feedtalk.feedtalkapi.Models.Reply;
 import com.feedtalk.feedtalkapi.Models.User;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedLinksRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
@@ -109,6 +112,26 @@ public class PublicAPI {
 	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/url/{URL}/")
 	public FeedLinks getFeedLinkByURL(@PathVariable String URL){
 		return feedLinksRepoImplementation.getFeedlinkByURLImpl(URL);
+	}		
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/new/{Id}/" )
+	public boolean newFeedComment(@PathVariable int Id,@RequestBody Comment comment){
+		return feedRepoImplementation.newComment(Id, comment);
+	}	
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/like/{FeedId}/{CommentId}/" )
+	public int setCommentLike(@PathVariable int FeedId,@PathVariable int CommentId){
+		return feedRepoImplementation.likeComment(FeedId, CommentId);
+	}
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/dislike/{FeedId}/{CommentId}/" )
+	public int setCommentdisLike(@PathVariable int FeedId,@PathVariable int CommentId){
+		return feedRepoImplementation.dislikeComment(FeedId, CommentId);
+	}
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/report/{FeedId}/{CommentId}/" )
+	public boolean reportComments(@PathVariable int FeedId,@PathVariable int CommentId){
+		return feedRepoImplementation.reportComment(FeedId, CommentId);
 	}
 	
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/reply/new/{FeedId}/{CommentId}/" )
+	public boolean newFeedReply(@PathVariable int FeedId,@PathVariable int CommentId, @RequestBody Reply reply){
+		return feedRepoImplementation.newReply(FeedId , CommentId, reply);
+	}
 }
