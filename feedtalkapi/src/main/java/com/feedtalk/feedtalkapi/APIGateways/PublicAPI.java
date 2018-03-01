@@ -1,9 +1,11 @@
 package com.feedtalk.feedtalkapi.APIGateways;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,11 +66,15 @@ public class PublicAPI {
 		return feedRepoImplementation.getTop30Feed();
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/feed/Top20FeedsByCatagory/{catagory}/")
-	public List<Feed> getTop20FeedByCatagory(@PathVariable UtilityHelper.FeedCatagory catagory) {
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/Top20FeedsByCatagory/{catagory}/")
+	public List<Feed> getTop20FeedByCatagory(@PathVariable String catagory) {
 		return feedRepoImplementation.getTop20FeedByCatagory(catagory);
 	}
-
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/Top20FeedLinksByCatagory/{catagory}/")
+	public List<Feed> getTop20FeedLinksByCatagory(@PathVariable String catagory) {
+		return feedRepoImplementation.getTop20FeedByCatagory(catagory);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/feed/NewFeed")
 	public Feed addNewFeed(@RequestBody Feed feed) {
 		return feedRepoImplementation.addNewFeedImpl(feed);
@@ -119,6 +125,7 @@ public class PublicAPI {
 	}	
 	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/like/{FeedId}/{CommentId}/" )
 	public int setCommentLike(@PathVariable int FeedId,@PathVariable int CommentId){
+	
 		return feedRepoImplementation.likeComment(FeedId, CommentId);
 	}
 	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/dislike/{FeedId}/{CommentId}/" )
@@ -129,9 +136,15 @@ public class PublicAPI {
 	public boolean reportComments(@PathVariable int FeedId,@PathVariable int CommentId){
 		return feedRepoImplementation.reportComment(FeedId, CommentId);
 	}
+	@RequestMapping(method = RequestMethod.GET,value = "/feed/comments/{FeedId}/" )
+	public Set<Comment> getCommentsByFeedId(@PathVariable int FeedId){
+		return feedRepoImplementation.getAllComment(FeedId);
+	}
 	
 	@RequestMapping(method = RequestMethod.PUT,value = "/feed/reply/new/{FeedId}/{CommentId}/" )
 	public boolean newFeedReply(@PathVariable int FeedId,@PathVariable int CommentId, @RequestBody Reply reply){
 		return feedRepoImplementation.newReply(FeedId , CommentId, reply);
 	}
+	
+	
 }

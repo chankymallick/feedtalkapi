@@ -55,8 +55,9 @@ public class FeedRepoImpl {
 		return feedRepository.findTop30ByPublishedTrueOrderByPublishingDateDesc();
 	}
 
-	public List<Feed> getTop20FeedByCatagory(UtilityHelper.FeedCatagory catagory) {
-		return feedRepository.findTop20ByCatagoryAndPublishedTrueOrderByPublishingDateDesc(catagory);
+	public List<Feed> getTop20FeedByCatagory(String catagory) {
+		UtilityHelper.FeedCatagory catagoryEnum = UtilityHelper.FeedCatagory.valueOf(catagory);
+		return feedRepository.findTop20ByCatagoryAndPublishedTrueOrderByPublishingDateDesc(catagoryEnum);
 	}
 
 	public int getLikes(int id) {
@@ -109,6 +110,9 @@ public class FeedRepoImpl {
 			}			
 		}
 		return null;
+	}
+	public Set<Comment> getAllComment(int FeedId){
+		return feedRepository.findOne(FeedId).getComments();
 	}
 	public Reply getReply(int feedId , int commentId,int replyId){
 		for(Comment com : feedRepository.findOne(feedId).getComments()){

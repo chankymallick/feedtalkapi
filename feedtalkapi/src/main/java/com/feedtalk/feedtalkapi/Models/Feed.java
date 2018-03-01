@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -72,7 +73,7 @@ public class Feed {
 	private int likes;
 	private int dislikes;
 	
-
+	@OrderBy("commentTime DESC")
 	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<Comment> comments; 
 	
