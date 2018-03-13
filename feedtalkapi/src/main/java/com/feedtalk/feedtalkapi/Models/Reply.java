@@ -84,7 +84,26 @@ public class Reply {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	public String getDisplayName() {
+		return displayName;
+	}
 
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public String getPhotoURL() {
+		return photoURL;
+	}
+
+	public void setPhotoURL(String photoURL) {
+		this.photoURL = photoURL;
+	}
+
+	@Column(length = 30)	
+	private String displayName;
+	@Column(length = 100)	
+	private String photoURL;
 	@Column(length=500,nullable=false)
 	private String replyText;
 	
@@ -95,7 +114,7 @@ public class Reply {
 	private int dislikes;
 	private int report;
 	private boolean hidden; 
-	
+
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)

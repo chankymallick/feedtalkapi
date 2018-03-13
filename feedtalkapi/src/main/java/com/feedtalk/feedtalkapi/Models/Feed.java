@@ -44,7 +44,7 @@ public class Feed {
 	@Column(nullable = false)
 	private String headline;
 
-	@Column(length = 3500, nullable = false)
+	@Column(length = 1, nullable = false ,columnDefinition = "NVARCHAR(MAX))")
 	private String content;
 
 	@Column(length = 130, nullable = false)

@@ -37,7 +37,7 @@ public class Comment {
 	@Column(length = 500, nullable = false)	
 	private String commentText;
 	
-	@Column(length = 30, nullable = false)	
+	@Column(length = 30, nullable = false)	//Email
 	private String userName;
 	
 	private int likes;
@@ -50,6 +50,26 @@ public class Comment {
 	
 	private int report;
 	private boolean hiden;
+	
+	
+	
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getPhotoURL() {
+		return photoURL;
+	}
+	public void setPhotoURL(String photoURL) {
+		this.photoURL = photoURL;
+	}
+	@Column(length = 30)	
+	private String displayName;
+	@Column(length = 100)	
+	private String photoURL;
+	
 	
 	public int getLikes() {
 		return likes;

@@ -1,6 +1,8 @@
 package com.feedtalk.feedtalkapi.RepositoryImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,52 +16,62 @@ import com.feedtalk.feedtalkapi.Repositories.FeedLinksRepository;
 import com.feedtalk.feedtalkapi.Repositories.FeedRepository;
 import com.feedtalk.feedtalkapi.Scrapper.NDTVLinksExtractor;
 import com.feedtalk.feedtalkapi.Scrapper.RSSReader;
+import com.feedtalk.feedtalkapi.utility.UtilityHelper;
 
 public class FeedLinksRepoImpl {
 	@Autowired
 	FeedLinksRepository feedLinkRepository;
 	@Autowired
 	RSSReader rssReader;
-	
+
 	public boolean addLinks(FeedLinks fdl) {
 		if (feedLinkRepository.save(fdl) != null) {
+			System.out.println("Link Saved : "+fdl.getHeadline());
 			return true;
 		} else {
 			return false;
 		}
 	}
-	public List<FeedLinks> getFeedLinksRepoImpl(){
+
+	public List<FeedLinks> getFeedLinksRepoImpl() {
 		List<FeedLinks> feedLinklist = new ArrayList<>();
 		feedLinkRepository.findAll().forEach(feedLinklist::add);
 		return feedLinklist;
 	}
-	public List<FeedLinks> getLatestFeedLinksRepoImpl(){
-		return feedLinkRepository.findTop40ByIsPublishedTrueOrderByLinkDateDesc();
-	}
-	public String mineLinks(){
-		Set<FeedLinks> linksSet = rssReader.getNDTVFeedLinks() ;
-		Set<FeedLinks> linksSet2 = rssReader.getTOILinks();
-		int i=1;
-		String response ="";
-		for(FeedLinks fl : linksSet){		
-			if(feedLinkRepository.findByLinkUrlAndIsPublishedTrue(fl.getLinkUrl())==null){
-			response+= i+ " == " + this.addLinks(fl);			
-			i++;
-			}
-		}
-		for(FeedLinks fl : linksSet2){		
-			if(feedLinkRepository.findByLinkUrlAndIsPublishedTrue(fl.getLinkUrl())==null){
-			response+= i+ " == " + this.addLinks(fl);			
-			i++;
+
+	public List<FeedLinks> getFeedLinksByTypeAllRepoImpl(String type) {
+		
+			return feedLinkRepository.findTop40ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(type);
+		
+    }
+
+	public String mineLinks() {
+		
+		List<Set> linksList = new ArrayList<Set>();
+		linksList.add(rssReader.getNDTVFeedLinks(UtilityHelper.NDTVRssFeed_TrendingNews, UtilityHelper.FeedCatagory.TOPSTORY));
+		linksList.add(rssReader.getNDTVFeedLinks(UtilityHelper.NDTVRssFeed_Technology,UtilityHelper.FeedCatagory.TECH));
+		linksList.add(rssReader.getNDTVFeedLinks(UtilityHelper.NDTVRssFeed_Cricket, UtilityHelper.FeedCatagory.CRICKET));
+		linksList.add(rssReader.getTOILinks(UtilityHelper.TimesOfIndiaEntertainment,UtilityHelper.FeedCatagory.MOVIES));
+		linksList.add(rssReader.getTOILinks(UtilityHelper.TimesOfIndiaTopTrending, UtilityHelper.FeedCatagory.TOPSTORY));
+		int i = 1;
+		String response = "";
+		for (Set<FeedLinks> links : linksList){
+			for (FeedLinks fl : links) {
+				if (feedLinkRepository.findByLinkUrlAndIsPublishedTrue(fl.getLinkUrl()) == null) {
+					response += i + " == " + this.addLinks(fl);
+					i++;
+				}
 			}
 		}
 		return response;
 	}
-	@Scheduled(cron="0 0/5 * * * ?")
-	public void scheduler(){
-		System.out.println("Scheduled Mining Started : "+this.mineLinks());
+
+	@Scheduled(cron = "0 0/5 * * * ?")
+	public void scheduler() {
+		System.out.println("Scheduled Mining Started : " + this.mineLinks());
 	}
-	public FeedLinks getFeedlinkByURLImpl(String URLLink){
+
+	public FeedLinks getFeedlinkByURLImpl(String URLLink) {
 		return feedLinkRepository.findByLinkUrlAndIsPublishedTrue(URLLink);
 	}
 }

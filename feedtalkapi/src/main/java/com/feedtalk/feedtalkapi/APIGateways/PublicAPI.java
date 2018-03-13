@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.security.RolesAllowed;
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -24,11 +26,12 @@ import com.feedtalk.feedtalkapi.Models.Reply;
 import com.feedtalk.feedtalkapi.Models.User;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedLinksRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
+import com.feedtalk.feedtalkapi.RepositoryImpl.LikeDislikeHistoryRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.UserRepoImpl;
 import com.feedtalk.feedtalkapi.utility.UtilityHelper;
 import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
 
-//@CrossOrigin(origins ={ "http://localhost:8100","http://localhost:8090"})
+//@CrossOrigin(origins ={ "http://localhost:8100","http://localhost:4200"})
 
 @CrossOrigin
 @RestController
@@ -39,7 +42,15 @@ public class PublicAPI {
 	@Autowired
 	UserRepoImpl userRepoImplementation;
 	@Autowired
-	FeedLinksRepoImpl feedLinksRepoImplementation;
+	FeedLinksRepoImpl feedLinksRepoImplementation;	
+	@Autowired
+	LikeDislikeHistoryRepoImpl likeDislikeHistoryImpl;
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping(method = RequestMethod.POST, value = "/feed/FeedById/{feedId}/")
 	public Feed getFeedByURL(@PathVariable int feedId) {
@@ -62,7 +73,7 @@ public class PublicAPI {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/latest")
-	public List<Feed> getTop20Feed() {
+	public List<Feed> getTop30Feed() {
 		return feedRepoImplementation.getTop30Feed();
 	}
 
@@ -111,10 +122,13 @@ public class PublicAPI {
 	public List<FeedLinks> getFeedLinks(){
 		return feedLinksRepoImplementation.getFeedLinksRepoImpl();
 	}
-	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/latest")
-	public List<FeedLinks> getLatestFeedLinks(){
-		return feedLinksRepoImplementation.getLatestFeedLinksRepoImpl();
-	}
+	
+	
+	
+	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/{type}")
+	public List<FeedLinks> getAllFeedLinks(@PathVariable String type){
+		return feedLinksRepoImplementation.getFeedLinksByTypeAllRepoImpl(type);
+	}	
 	@RequestMapping(method = RequestMethod.GET , value = "/feedlinks/url/{URL}/")
 	public FeedLinks getFeedLinkByURL(@PathVariable String URL){
 		return feedLinksRepoImplementation.getFeedlinkByURLImpl(URL);
@@ -123,15 +137,22 @@ public class PublicAPI {
 	public boolean newFeedComment(@PathVariable int Id,@RequestBody Comment comment){
 		return feedRepoImplementation.newComment(Id, comment);
 	}	
-	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/like/{FeedId}/{CommentId}/" )
-	public int setCommentLike(@PathVariable int FeedId,@PathVariable int CommentId){
 	
-		return feedRepoImplementation.likeComment(FeedId, CommentId);
+	
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/like/{FeedId}/{CommentId}/{UserId}/" )
+	public int setCommentLike(@PathVariable int FeedId,@PathVariable int CommentId,@PathVariable String UserId){
+	
+		return feedRepoImplementation.likeComment(FeedId, CommentId,UserId);
 	}
-	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/dislike/{FeedId}/{CommentId}/" )
-	public int setCommentdisLike(@PathVariable int FeedId,@PathVariable int CommentId){
-		return feedRepoImplementation.dislikeComment(FeedId, CommentId);
+	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/dislike/{FeedId}/{CommentId}/{UserId}/" )
+	public int setCommentdisLike(@PathVariable int FeedId,@PathVariable int CommentId,@PathVariable String UserId){
+		return feedRepoImplementation.dislikeComment(FeedId, CommentId,UserId);
 	}
+	
+	
+	
+	
+	
 	@RequestMapping(method = RequestMethod.PUT,value = "/feed/comments/report/{FeedId}/{CommentId}/" )
 	public boolean reportComments(@PathVariable int FeedId,@PathVariable int CommentId){
 		return feedRepoImplementation.reportComment(FeedId, CommentId);

@@ -17,7 +17,7 @@ import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.UserRepoImpl;
 import com.feedtalk.feedtalkapi.Scrapper.NDTVLinksExtractor;
 import com.feedtalk.feedtalkapi.Scrapper.RSSReader;
-
+import com.feedtalk.feedtalkapi.RepositoryImpl.LikeDislikeHistoryRepoImpl;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -46,6 +46,10 @@ public class FeedtalkapiApplication extends SpringBootServletInitializer {
 	@Bean
 	public FeedLinksRepoImpl feedLinksRepoImplementation(){
 		return new FeedLinksRepoImpl();
+	}
+	@Bean
+	public LikeDislikeHistoryRepoImpl LikeDislikeHistoryRepoImpl(){
+		return new LikeDislikeHistoryRepoImpl();
 	}
 	
 	@Bean 
