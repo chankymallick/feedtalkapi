@@ -17,6 +17,8 @@ public interface FeedRepository extends CrudRepository<Feed,Integer> {
 	
 	public Feed findByFeedIdAndPublishedTrue(int id);	
 
+	public List<Feed> findTop30ByPublishedTrueOrderByViewsDesc();
+	
 	public List<Feed> findTop30ByPublishedTrueOrderByPublishingDateDesc();
 	
 	public List<Feed> findTop20ByCatagoryAndPublishedTrueOrderByPublishingDateDesc(UtilityHelper.FeedCatagory catagory);

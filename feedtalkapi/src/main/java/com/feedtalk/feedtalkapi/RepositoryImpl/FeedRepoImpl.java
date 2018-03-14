@@ -61,10 +61,12 @@ public class FeedRepoImpl {
 		return feedlist;
 	}
 
-	public List<Feed> getTop30Feed() {
+	public List<Feed> getTop30MostRecentFeed() {
 		return feedRepository.findTop30ByPublishedTrueOrderByPublishingDateDesc();
 	}
-
+	public List<Feed> getTop30MostReadFeed() {
+		return feedRepository.findTop30ByPublishedTrueOrderByViewsDesc();
+	}
 	public List<Feed> getTop20FeedByCatagory(String catagory) {
 		UtilityHelper.FeedCatagory catagoryEnum = UtilityHelper.FeedCatagory.valueOf(catagory);
 		return feedRepository.findTop20ByCatagoryAndPublishedTrueOrderByPublishingDateDesc(catagoryEnum);
