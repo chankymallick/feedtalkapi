@@ -93,7 +93,18 @@ public class FeedRepoImpl {
 			return false;
 		}
 	}
+	public boolean updateFeedPublish(int id,boolean publish) {
+		Feed oldfeed = feedRepository.findOne(id);
+		if (oldfeed != null) {
+			oldfeed.setPublished(publish);
+			feedRepository.save(oldfeed);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	
 	public boolean setDislikeImpl(int id) {
 		Feed feed = feedRepository.findOne(id);
 		if (feed != null) {

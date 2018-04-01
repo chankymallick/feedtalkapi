@@ -82,43 +82,18 @@ public class PublicAPI {
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/Top20FeedLinksByCatagory/{catagory}/")
 	public List<Feed> getTop20FeedLinksByCatagory(@PathVariable String catagory) {
 		return feedRepoImplementation.getTop20FeedByCatagory(catagory);
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/feed/NewFeed")
-	public Feed addNewFeed(@RequestBody Feed feed) {
-		return feedRepoImplementation.addNewFeedImpl(feed);
-	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/feed/NewUser")
-	public User addNewUser(@RequestBody User user, Authentication auth) {
-		return userRepoImplementation.addNewUserImpl(user);
-	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "/feed/likes/{id}/")
-	public boolean setFeedLikes(@PathVariable int id) {
-		return feedRepoImplementation.setLikeImpl(id);
-	}
+	}	
 
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/likes/{id}/")
 	public int getFeedLikes(@PathVariable int id) {
 		return feedRepoImplementation.getLikes(id);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = "/feed/dislikes/{id}/")
-	public boolean setFeedDislikes(@PathVariable int id) {
-		return feedRepoImplementation.setDislikeImpl(id);
-	}
-
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/dislikes/{id}/")
 	public int getFeedDislikes(@PathVariable int id) {
 		return feedRepoImplementation.getDislikes(id);
 	}
-
-	@RequestMapping(method = RequestMethod.POST, value = "/feedlinks/extract")
-	public String extractLinks() {
-		return feedLinksRepoImplementation.mineLinks();
-	}
-
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/feedlinks")
 	public List<FeedLinks> getFeedLinks() {
 		return feedLinksRepoImplementation.getFeedLinksRepoImpl();
@@ -133,23 +108,7 @@ public class PublicAPI {
 	public FeedLinks getFeedLinkByURL(@PathVariable String URL) {
 		return feedLinksRepoImplementation.getFeedlinkByURLImpl(URL);
 	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "/feed/comments/new/{Id}/")
-	public boolean newFeedComment(@PathVariable int Id, @RequestBody Comment comment) {
-		return feedRepoImplementation.newComment(Id, comment);
-	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "/feed/comments/like/{FeedId}/{CommentId}/{UserId}/")
-	public int setCommentLike(@PathVariable int FeedId, @PathVariable int CommentId, @PathVariable String UserId) {
-
-		return feedRepoImplementation.likeComment(FeedId, CommentId, UserId);
-	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "/feed/comments/dislike/{FeedId}/{CommentId}/{UserId}/")
-	public int setCommentdisLike(@PathVariable int FeedId, @PathVariable int CommentId, @PathVariable String UserId) {
-		return feedRepoImplementation.dislikeComment(FeedId, CommentId, UserId);
-	}
-
+	
 	@RequestMapping(method = RequestMethod.PUT, value = "/feed/comments/report/{FeedId}/{CommentId}/")
 	public boolean reportComments(@PathVariable int FeedId, @PathVariable int CommentId) {
 		return feedRepoImplementation.reportComment(FeedId, CommentId);
@@ -158,11 +117,6 @@ public class PublicAPI {
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/comments/{FeedId}/")
 	public Set<Comment> getCommentsByFeedId(@PathVariable int FeedId) {
 		return feedRepoImplementation.getAllComment(FeedId);
-	}
-
-	@RequestMapping(method = RequestMethod.PUT, value = "/feed/reply/new/{FeedId}/{CommentId}/")
-	public boolean newFeedReply(@PathVariable int FeedId, @PathVariable int CommentId, @RequestBody Reply reply) {
-		return feedRepoImplementation.newReply(FeedId, CommentId, reply);
 	}
 
 }

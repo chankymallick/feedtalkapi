@@ -9,5 +9,8 @@ import com.feedtalk.feedtalkapi.Models.User;
 public interface UserRepository  extends CrudRepository <User , Integer> {
 	
 	public User findByEmailAndActiveTrue(String username);
+	public User findByEmailAndPasswordAndUsertypeAndActiveTrue(String username,String password,String Usertype);
+	
+	public User findByEmailAndPasswordAndActiveTrue(String username,String password);
 
 }
