@@ -53,6 +53,7 @@ public class UserRepoImpl {
 			if (user != null) {
 				response.put("ATHOURIZED", "TRUE");
 				response.put("USER_TYPE", user.getUsertype());
+				response.put("USER_NAME", user.getUsername());
 			} else {
 				response.put("ATHOURIZED", "FALSE");
 				response.put("USER_TYPE", "");

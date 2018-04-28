@@ -51,7 +51,7 @@ public class PublicAPI {
 		return feedRepoImplementation.getFeedByIdImpl(feedId);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/feed/FeedByUrl/{Url_Link}/")
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/FeedByUrl/{Url_Link}/")
 	public Feed getFeedByURL(@PathVariable String Url_Link) {
 		return feedRepoImplementation.getFeedByUrlLinkImpl(Url_Link);
 	}
@@ -70,10 +70,44 @@ public class PublicAPI {
 	public List<Feed> getTop30MostRecentFeed() {
 		return feedRepoImplementation.getTop30MostRecentFeed();
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/mostrecent/top6")
+	public List<Feed> get6TopStories() {
+		return feedRepoImplementation.getTop6TopStories();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/mostrecent/top14")
+	public List<Feed> get20TopStories() {
+		return feedRepoImplementation.getTop14TopStories();
+	}
+	
+	
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/mostread")
 	public List<Feed> getTop30MostReadFeed() {
 		return feedRepoImplementation.getTop30MostReadFeed();
 	}
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/mostread/top6")
+	public List<Feed> getTop6MostReadFeed() {
+		return feedRepoImplementation.getTop6MostReadFeed();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/nextfeed/{curentfeed}")
+	public Feed getNextFeed(@PathVariable int curentfeed) {
+		return feedRepoImplementation.getNextFeed(curentfeed);
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/nonpolitics")
+	public List<Feed> getTop6NonPoliticsFeed(){
+		return feedRepoImplementation.getNonPoliticsFeed();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/related/{currentFeedId}")
+	public List<Feed> getRelatedFeedsWithMatchingTags(@PathVariable int currentFeedId){		
+		return feedRepoImplementation.getRelatedFeeds(currentFeedId);		
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/Top20FeedsByCatagory/{catagory}/")
 	public List<Feed> getTop20FeedByCatagory(@PathVariable String catagory) {
 		return feedRepoImplementation.getTop20FeedByCatagory(catagory);

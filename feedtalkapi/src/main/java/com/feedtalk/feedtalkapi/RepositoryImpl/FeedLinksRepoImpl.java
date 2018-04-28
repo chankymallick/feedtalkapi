@@ -41,7 +41,7 @@ public class FeedLinksRepoImpl {
 
 	public List<FeedLinks> getFeedLinksByTypeAllRepoImpl(String type) {
 		
-			return feedLinkRepository.findTop40ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(type);
+			return feedLinkRepository.findTop12ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(type);
 		
     }
 

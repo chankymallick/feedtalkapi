@@ -40,9 +40,9 @@ public class PrivateAPI {
 		return userRepoImplementation.loginAndAuthourityDetails(username, password);		
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/feed/updatepublish/{feedid}/{publishstatus}")
-	public boolean updateFeedPublishStatus(@PathVariable int feedid,@PathVariable boolean publishstatus) {
-		return feedRepoImplementation.updateFeedPublish(feedid, publishstatus);
+	@RequestMapping(method = RequestMethod.POST, value = "/feed/updatefeed/{feedid}/")
+	public boolean updateFeedPublishStatus(@PathVariable int feedid,@RequestBody Feed feed) {
+		return feedRepoImplementation.updateFeedPublish(feedid, feed);
 	}
 
 	
@@ -50,7 +50,10 @@ public class PrivateAPI {
 	public Feed addNewFeed(@RequestBody Feed feed) {
 		return feedRepoImplementation.addNewFeedImpl(feed);
 	}
-
+	@RequestMapping(method = RequestMethod.POST, value = "/feed/editfeed")
+	public Feed editFeed(@RequestBody Feed feed) {
+		return feedRepoImplementation.addNewFeedImpl(feed);
+	}
 	@RequestMapping(method = RequestMethod.POST, value = "/user/newuser/{dummydata1}/{password}/{dummydata2}/{username}")
 	public Object addNewUser(@RequestBody User user, @PathVariable String username, @PathVariable String password) {
 	

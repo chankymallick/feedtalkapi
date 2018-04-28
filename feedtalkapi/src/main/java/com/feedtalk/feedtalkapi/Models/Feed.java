@@ -47,7 +47,7 @@ public class Feed {
 	@Column(length = 1, nullable = false ,columnDefinition = "NVARCHAR(MAX))")
 	private String content;
 
-	@Column(length = 130, nullable = false)
+	@Column(length = 1000, nullable = false)
 	private String contentPreview;
 
 	@Column(length = 4000, nullable = false)
@@ -71,8 +71,28 @@ public class Feed {
 	private int views;
 	private int shared;
 	private int likes;
-	private int dislikes;
+	private int dislikes;	
+	private double viewOrder;
+	private String tags;
 	
+	
+	
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public double getViewOrder() {
+		return viewOrder;
+	}
+
+	public void setViewOrder(double viewOrder) {
+		this.viewOrder = viewOrder;
+	}
+
 	@OrderBy("commentTime DESC")
 	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<Comment> comments; 

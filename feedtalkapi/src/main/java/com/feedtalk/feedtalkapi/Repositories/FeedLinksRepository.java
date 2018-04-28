@@ -14,5 +14,6 @@ public interface FeedLinksRepository extends CrudRepository<FeedLinks,Integer>{
 	public FeedLinks findByLinkUrlAndIsPublishedTrue(String UrlLink);
 	public List<FeedLinks> findTop40ByIsPublishedTrueOrderByLinkDateDesc();	
 	public List<FeedLinks> findTop40ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(String Catagory);
+	public List<FeedLinks> findTop12ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(String Catagory);
 
 }
