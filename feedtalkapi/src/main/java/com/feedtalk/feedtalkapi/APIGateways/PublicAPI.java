@@ -138,6 +138,12 @@ public class PublicAPI {
 		return feedLinksRepoImplementation.getFeedLinksByTypeAllRepoImpl(type);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/feedlinks/breakingnews")
+	public List<FeedLinks> getTopBreakingNewslinksFlash() {
+		return feedLinksRepoImplementation.getBreakingNews();
+	}
+
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/feedlinks/url/{URL}/")
 	public FeedLinks getFeedLinkByURL(@PathVariable String URL) {
 		return feedLinksRepoImplementation.getFeedlinkByURLImpl(URL);

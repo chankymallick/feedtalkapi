@@ -44,6 +44,10 @@ public class FeedLinksRepoImpl {
 			return feedLinkRepository.findTop12ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(type);
 		
     }
+	
+	public List<FeedLinks> getBreakingNews(){
+		return feedLinkRepository.findTop4ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(UtilityHelper.FeedCatagory.TOPSTORY.toString());
+	}
 
 	public String mineLinks() {
 		
