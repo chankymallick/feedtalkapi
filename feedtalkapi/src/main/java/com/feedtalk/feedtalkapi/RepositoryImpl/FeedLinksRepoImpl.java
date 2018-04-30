@@ -78,4 +78,8 @@ public class FeedLinksRepoImpl {
 	public FeedLinks getFeedlinkByURLImpl(String URLLink) {
 		return feedLinkRepository.findByLinkUrlAndIsPublishedTrue(URLLink);
 	}
+	
+	public FeedLinks getFeedlinkByIdImpl(int linkId) {
+		return feedLinkRepository.findByLinkIdAndIsPublishedTrue(linkId);
+	}
 }

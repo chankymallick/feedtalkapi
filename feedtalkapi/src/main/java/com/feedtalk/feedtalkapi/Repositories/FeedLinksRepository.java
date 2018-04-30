@@ -11,6 +11,9 @@ import com.feedtalk.feedtalkapi.Models.FeedLinks;
 @RepositoryRestResource(exported = false)
 public interface FeedLinksRepository extends CrudRepository<FeedLinks,Integer>{
 	
+	
+	
+	public FeedLinks findByLinkIdAndIsPublishedTrue(int linkId);
 	public FeedLinks findByLinkUrlAndIsPublishedTrue(String UrlLink);
 	public List<FeedLinks> findTop40ByIsPublishedTrueOrderByLinkDateDesc();	
 	public List<FeedLinks> findTop40ByCatagoryAndIsPublishedTrueOrderByLinkDateDesc(String Catagory);

@@ -3,18 +3,9 @@ package com.feedtalk.feedtalkapi.APIGateways;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.security.RolesAllowed;
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,14 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.feedtalk.feedtalkapi.Models.Comment;
 import com.feedtalk.feedtalkapi.Models.Feed;
 import com.feedtalk.feedtalkapi.Models.FeedLinks;
-import com.feedtalk.feedtalkapi.Models.Reply;
-import com.feedtalk.feedtalkapi.Models.User;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedLinksRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.FeedRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.LikeDislikeHistoryRepoImpl;
 import com.feedtalk.feedtalkapi.RepositoryImpl.UserRepoImpl;
-import com.feedtalk.feedtalkapi.utility.UtilityHelper;
-import com.feedtalk.feedtalkapi.utility.UtilityHelper.FeedCatagory;
+
 
 //@CrossOrigin(origins ={ "http://localhost:8100","http://localhost:4200"})
 
@@ -80,9 +68,7 @@ public class PublicAPI {
 	public List<Feed> get20TopStories() {
 		return feedRepoImplementation.getTop14TopStories();
 	}
-	
-	
-	
+		
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/mostread")
 	public List<Feed> getTop30MostReadFeed() {
 		return feedRepoImplementation.getTop30MostReadFeed();
@@ -106,8 +92,7 @@ public class PublicAPI {
 	public List<Feed> getRelatedFeedsWithMatchingTags(@PathVariable int currentFeedId){		
 		return feedRepoImplementation.getRelatedFeeds(currentFeedId);		
 	}
-	
-	
+		
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/Top20FeedsByCatagory/{catagory}/")
 	public List<Feed> getTop20FeedByCatagory(@PathVariable String catagory) {
 		return feedRepoImplementation.getTop20FeedByCatagory(catagory);
@@ -143,6 +128,11 @@ public class PublicAPI {
 		return feedLinksRepoImplementation.getBreakingNews();
 	}
 
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/feedlinks/id/{id}/")
+	public FeedLinks getFeedLinkById(@PathVariable int id) {
+		return feedLinksRepoImplementation.getFeedlinkByIdImpl(id);
+	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/feedlinks/url/{URL}/")
 	public FeedLinks getFeedLinkByURL(@PathVariable String URL) {
