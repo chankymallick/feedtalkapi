@@ -12,7 +12,20 @@ public class UtilityHelper {
 		ADMIN,AUTHOUR,READER
 	}
 	public enum FeedCatagory {
-		TOPSTORY, TECH,CRICKET, POLITICS,MOVIES
+		TOPSTORY,
+		TECH,
+		CRICKET,
+		POLITICS,
+		MOVIES,
+		ENTERTAINMENT ,
+		FACTCHECK,	
+		WORLD,		
+		SPORTS,
+		INFORMATIVE,
+		HEALTH,
+		OTHERS
+
+		
 	}
 
 	public enum CommentType {

@@ -42,6 +42,8 @@ public interface FeedRepository extends CrudRepository<Feed,Integer> {
 	@Query("select f from Feed f where f.published=1 and f.tags like %?1% order by f.publishingDate desc")
 	public List<Feed> getRelatedFeedsQuery(String tag);
 		
-	
+	@Query("select f from Feed f where f.published=1 and f.headline like %?1% order by f.publishingDate desc")
+	public List<Feed> getSearchFeedQuery(String query);
+		
 	
 }

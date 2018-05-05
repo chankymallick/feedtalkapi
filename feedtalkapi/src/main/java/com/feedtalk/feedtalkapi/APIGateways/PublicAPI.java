@@ -101,8 +101,14 @@ public class PublicAPI {
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/Top20FeedLinksByCatagory/{catagory}/")
 	public List<Feed> getTop20FeedLinksByCatagory(@PathVariable String catagory) {
 		return feedRepoImplementation.getTop20FeedByCatagory(catagory);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/feed/search/{query}/")
+	public List<Feed> searchFeed(@PathVariable String query) {
+		return feedRepoImplementation.searchFeedByQuery(query);
 	}	
 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/feed/likes/{id}/")
 	public int getFeedLikes(@PathVariable int id) {
 		return feedRepoImplementation.getLikes(id);

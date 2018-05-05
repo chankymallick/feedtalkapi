@@ -151,6 +151,13 @@ public class FeedRepoImpl {
 		return feedRepository.findTop20ByCatagoryAndPublishedTrueOrderByPublishingDateDesc(catagoryEnum);
 	}
 
+	
+	public List<Feed> searchFeedByQuery(String query) {
+		
+		return feedRepository.getSearchFeedQuery(query);
+	}
+
+	
 	public int getLikes(int id) {
 		Feed feed = feedRepository.findOne(id);
 		return feed.getLikes();
@@ -324,8 +331,7 @@ public class FeedRepoImpl {
 		});
 		Map<String, Integer> returnMap = new LinkedHashMap<String, Integer>();
 		for (Map.Entry<String, Integer> entry : list) {
-			returnMap.put(entry.getKey(), entry.getValue());
-			System.out.println(entry.getKey() + " ==== " + entry.getValue());
+			returnMap.put(entry.getKey(), entry.getValue());			
 		}
 		return returnMap;
 	}
